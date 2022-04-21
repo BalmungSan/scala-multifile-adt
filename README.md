@@ -6,7 +6,7 @@ without loosing important properties like exhaustive pattern matching checks.
 ## Disclaimer
 
 First of all, note that I am sharing those two patterns mostly as an academic exercise,
-this means that I do not recommend using those two approaches:
+this means that I do not recommend using either of these two approaches:
 
 + First, because I think one should _(almost)_ never need to have
 an **ADT** so big for one to care about how to split it into files-
@@ -71,12 +71,12 @@ final case class Foo(x: Int, y: Int) extends MyADT {
   // Foo implementation.
 }
 
-final case class Foo(a: String, b: String) extends MyADT {
+final case class Bar(a: String, b: String) extends MyADT {
   // Bar implementation.
 }
 ```
 
-We well do something like this instead:
+We will do something like this instead:
 
 ```scala
 sealed trait MyADT {
@@ -166,7 +166,7 @@ and because `Foo` is `final` then it can only be mixed in into `Foo` itself
 _(of course, one may still use the incorrect self-type like `Bar` in this case)_.
 
 Great, we are almost there!<br>
-Consequently, it happens that goal `7` is provided by the compiler out of the box.
+Fortunately, the compiler contributes goal `7`, out of the box, for us.
 
 ```scala
 // If we do not provide an implementation for combine in BarImpl:
@@ -179,8 +179,8 @@ trait BarImpl { self: Bar =>
 
 Finally, for goal `8` we only need to move all the files to their own `package`
 and mark all the implementation traits as `private[pckg]`
-and then they will be invisible to users.
-// We can also easily test that like this:
+and then they will be invisible to users.<br>
+We can easily test that like this:
 
 ```scala
 // If we try to access the FooImpl class:
@@ -193,7 +193,7 @@ new FooImpl
 
 #### Summary
 
-Putting it all together the _simple_ multi-file **ADT** pattern is as follows:
+Putting it all together, the _simple_ multi-file **ADT** pattern looks like this:
 
 ```scala
 // file: some/pckg/MyADT.scala ------------------------------------------------
@@ -237,9 +237,9 @@ private[pckg] trait BarImpl { self: Bar =>
 
 This pattern requires a little bit of extra trickery.<br>
 The main idea is the same as before,
-being able to split the **ADT** into multiple file,
-But this time, we also want to make use of traditional **OOP** tricks;
-like overriding a method or calling `super`.
+being able to split the **ADT** into multiple files.
+But, this time, we also want to support traditional **OOP** tricks;
+like method overriding and calls to `super`.
 
 First, let's define our original **ADT** in a single file:
 
