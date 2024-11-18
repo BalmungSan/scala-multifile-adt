@@ -20,7 +20,39 @@ object Main:
     println("Simple test ends!")
   end testSimple
 
+  def testComplex(): Unit =
+    import complex._
+    import MyComplexADT.*
+    println("Complex test begins!")
+
+    val foo = Foo(x = 0, y = 1)
+    val bar = Bar(a = "A", b = "B")
+
+    println(foo.combine(bar))
+    println(bar.combine(foo))
+    println(foo.combine(foo))
+    println(bar.combine(bar))
+
+    /** Error: match may not be exhaustive:
+     *         It would fail on the following input: (Bar(_, _), Foo(_, _))
+     */
+    // ((foo : MyComplexADT), (bar : MyComplexADT)) match
+    //   case (Foo(_, _), Foo(_, _)) =>
+    //   case (Foo(_, _), Bar(_, _)) =>
+    //   case (Bar(_, _), Bar(_, _)) =>
+
+    /** Error: not found: type FooImpl */
+    // new FooImpl
+
+    /** Error: not found: type MyComplexADTRoot */
+    // new MyComplexADTRoot
+
+    println("Complex test ends!")
+  end testComplex
+
   def main(args: Array[String]): Unit =
     testSimple()
+    println("-----")
+    testComplex()
   end main
 end Main

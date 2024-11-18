@@ -53,7 +53,7 @@ object Main {
 
   def main(args: Array[String]): Unit = {
     testSimple()
-    println()
+    println("-----")
     testComplex()
   }
 }
