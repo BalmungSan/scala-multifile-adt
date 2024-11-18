@@ -3,6 +3,8 @@
 This repo contains two small demos of how to be able to split an **ADT** into multiple file,
 without loosing important properties like exhaustive pattern matching checks.
 
+The demos are presented using both **Scala 2** syntax with `sealed traits` & `case classes` as well as **Scala 3** versions using `enum`.
+
 ## Disclaimer
 
 First of all, note that I am sharing those two patterns mostly as an academic exercise,
